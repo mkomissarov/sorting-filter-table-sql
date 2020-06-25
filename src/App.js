@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { findByDisplayValue } from '@testing-library/react';
 
 function App() {
   const [cars, setCars] = useState([]);
@@ -20,50 +21,117 @@ function App() {
   cars.forEach((el) => notSorted.push(el));
 
   function callFilter(param, equally, value) {
-    console.log(param);
     let forSorting = [];
     switch (equally) {
       case 'equally':
+        ////////////////////////////////////////////
         if (param === 'name') {
-          for (let i = 0; i < cars.length; i++) {
-            if (cars[i].name.toLowerCase() === value.toLowerCase()) {
-              forSorting.push(cars[i]);
-              return setCars(forSorting);
+          if (value === '') {
+            return getDataCars();
+          } else {
+            for (let i = 0; i < notSorted.length; i++) {
+              if (notSorted[i].name.toLowerCase() !== value.toLowerCase()) {
+              } else {
+                forSorting.push(notSorted[i]);
+                setCars(forSorting);
+              }
             }
           }
-          getDataCars();
-          forSorting = [];
+          ///////////////////////////////////////////
         } else if (param === 'counter') {
-          for (let i = 0; i < cars.length; i++) {
-            if (cars[i].counter.toString() === value) {
-              forSorting.push(cars[i]);
-              return setCars(forSorting);
+          if (value === '') {
+            return getDataCars();
+          } else {
+            for (let i = 0; i < notSorted.length; i++) {
+              if (notSorted[i].counter !== +value) {
+              } else {
+                forSorting.push(notSorted[i]);
+                setCars(forSorting);
+              }
             }
           }
-          getDataCars();
-          forSorting = [];
+          ///////////////////////////////////////////
         } else if (param === 'track') {
-          for (let i = 0; i < cars.length; i++) {
-            if (cars[i].track === value) {
-              forSorting.push(cars[i]);
-              return setCars(forSorting);
+          if (value === '') {
+            return getDataCars();
+          } else {
+            for (let i = 0; i < notSorted.length; i++) {
+              if (notSorted[i].track.toLowerCase() !== value.toLowerCase()) {
+              } else {
+                forSorting.push(notSorted[i]);
+                setCars(forSorting);
+              }
             }
           }
-          getDataCars();
-          forSorting = [];
+          ///////////////////////////////////////////
         }
         break;
 
       case 'include':
-        for (let key of cars) {
-          if ()
-          forSorting.push(key);
-          setCars(forSorting);
+        if (param === 'name') {
+          if (value.length > 0) {
+            for (let key of cars) {
+              if (key.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+                forSorting.push(key);
+                setCars(forSorting);
+              }
+            }
+          } else {
+            getDataCars();
+          }
+        } else if (param === 'counter') {
+          if (value.length > 0) {
+            for (let key of cars) {
+              if (key.counter.toString().indexOf(value.toString()) >= 0) {
+                forSorting.push(key);
+                setCars(forSorting);
+              }
+            }
+          } else {
+            getDataCars();
+          }
+        } else if (param === 'track') {
+          if (value.length > 0) {
+            for (let key of cars) {
+              if (key.track.toString().indexOf(value.toString()) >= 0) {
+                forSorting.push(key);
+                setCars(forSorting);
+              }
+            }
+          } else {
+            getDataCars();
+          }
         }
-        getDataCars();
-        forSorting = [];
         break;
-
+      case 'more':
+        if (param === 'counter') {
+          if (value === '') {
+            return getDataCars();
+          } else {
+            for (let i = 0; i < notSorted.length; i++) {
+              if (notSorted[i].counter < +value) {
+              } else {
+                forSorting.push(notSorted[i]);
+                setCars(forSorting);
+              }
+            }
+          }
+          ///////////////////////////////////////////
+        } else if (param === 'track') {
+          if (value === '') {
+            return getDataCars();
+          } else {
+            for (let i = 0; i < notSorted.length; i++) {
+              if (+notSorted[i].track.replace('km', '') < +value) {
+              } else {
+                forSorting.push(notSorted[i]);
+                setCars(forSorting);
+              }
+            }
+          }
+          ///////////////////////////////////////////
+        }
+        break;
       default:
         break;
     }
@@ -97,10 +165,10 @@ function App() {
         <table>
           <tbody>
             <tr>
-              <td>Дата</td>
-              <td>Название</td>
-              <td>Счётчик</td>
-              <td>Километраж</td>
+              <th>Дата</th>
+              <th>Название</th>
+              <th>Счётчик</th>
+              <th>Километраж</th>
             </tr>
             {cars.map((el) => (
               <tr>

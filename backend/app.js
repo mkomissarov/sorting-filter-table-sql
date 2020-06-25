@@ -33,19 +33,15 @@ app.get('/createtable', (req, res) => {
     if (err) console.log(err);
     else console.log('Таблица создана');
   });
-
-  const cars = [
-    [Date.now(), 'Gazelle', 123, '5km'],
-    [Date.now(), 'Lada', 70, '15km'],
-    [Date.now(), 'Toyota', 15, '65km'],
-  ];
+*/
+  const cars = [[Date.now(), 'Gazelle', 42, '61km']];
   const insert = `INSERT INTO cars(date, name, counter, track) VALUES ?`;
 
   connection.query(insert, [cars], function (err, results) {
     if (err) console.log(err);
     console.log(results);
   });
-  connection.end(); */
+  //connection.end();
   res.send('База данных успешно заполнена');
 });
 
