@@ -1,6 +1,6 @@
 # Sorting and filter table, mySql
 
-Retrieving data from a database. Sorting fields, filtering tables.
+Retrieving data from a database. Sorting fields, filtering tables on ***client side***.
 
 # Install
 
@@ -14,5 +14,7 @@ npm i
 npm start
 ```
 
+# Screenshots
 
+![Main page](http://i.yapx.ru/IAcDE.png "Main screen")
 
