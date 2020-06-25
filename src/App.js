@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [defaultCars, setDefaultCars] = useState([]);
   const [cars, setCars] = useState([]);
   const [param, setParam] = useState('');
   const [equally, setEqually] = useState('');
@@ -14,6 +15,7 @@ function App() {
   async function getDataCars() {
     const response = await (await fetch('/getdata')).json();
     setCars(response);
+    return setDefaultCars(response);
   }
 
   let notSorted = [];
@@ -21,6 +23,7 @@ function App() {
 
   function callFilter(param, equally, value) {
     let forSorting = [];
+    // eslint-disable-next-line default-case
     switch (equally) {
       case 'equally':
         if (param === 'name') {
@@ -129,10 +132,10 @@ function App() {
           if (value === '') {
             return getDataCars();
           } else {
-            for (let i = 0; i < notSorted.length; i++) {
-              if (notSorted[i].counter > +value) {
+            for (let i = 0; i < defaultCars.length; i++) {
+              if (defaultCars[i].counter > +value) {
               } else {
-                forSorting.push(notSorted[i]);
+                forSorting.push(defaultCars[i]);
                 setCars(forSorting);
               }
             }
@@ -141,18 +144,13 @@ function App() {
           if (value === '') {
             return getDataCars();
           } else {
-            for (let i = 0; i < notSorted.length; i++) {
-              if (+notSorted[i].track.replace('km', '') > +value) {
-              } else {
-                forSorting.push(notSorted[i]);
-                setCars(forSorting);
-              }
+            for (let i = 0; i < defaultCars.length; i++) {
+              if (+value > Number(defaultCars[i].track.replace('km', '')))
+                forSorting.push(defaultCars[i]);
             }
           }
+          setCars(forSorting);
         }
-        break;
-      default:
-        break;
     }
   }
 
@@ -178,9 +176,6 @@ function App() {
         }}
       />
       <div>
-        {param}
-        {equally}
-        {input}
         <table>
           <tbody>
             <tr>
