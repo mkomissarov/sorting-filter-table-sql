@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { findByDisplayValue } from '@testing-library/react';
 
 function App() {
   const [cars, setCars] = useState([]);
@@ -24,7 +23,6 @@ function App() {
     let forSorting = [];
     switch (equally) {
       case 'equally':
-        ////////////////////////////////////////////
         if (param === 'name') {
           if (value === '') {
             return getDataCars();
@@ -37,7 +35,6 @@ function App() {
               }
             }
           }
-          ///////////////////////////////////////////
         } else if (param === 'counter') {
           if (value === '') {
             return getDataCars();
@@ -50,7 +47,6 @@ function App() {
               }
             }
           }
-          ///////////////////////////////////////////
         } else if (param === 'track') {
           if (value === '') {
             return getDataCars();
@@ -63,10 +59,8 @@ function App() {
               }
             }
           }
-          ///////////////////////////////////////////
         }
         break;
-
       case 'include':
         if (param === 'name') {
           if (value.length > 0) {
@@ -116,7 +110,6 @@ function App() {
               }
             }
           }
-          ///////////////////////////////////////////
         } else if (param === 'track') {
           if (value === '') {
             return getDataCars();
@@ -129,7 +122,33 @@ function App() {
               }
             }
           }
-          ///////////////////////////////////////////
+        }
+        break;
+      case 'less':
+        if (param === 'counter') {
+          if (value === '') {
+            return getDataCars();
+          } else {
+            for (let i = 0; i < notSorted.length; i++) {
+              if (notSorted[i].counter > +value) {
+              } else {
+                forSorting.push(notSorted[i]);
+                setCars(forSorting);
+              }
+            }
+          }
+        } else if (param === 'track') {
+          if (value === '') {
+            return getDataCars();
+          } else {
+            for (let i = 0; i < notSorted.length; i++) {
+              if (+notSorted[i].track.replace('km', '') > +value) {
+              } else {
+                forSorting.push(notSorted[i]);
+                setCars(forSorting);
+              }
+            }
+          }
         }
         break;
       default:
@@ -182,7 +201,11 @@ function App() {
         </table>
       </div>
 
-      {/* <button onClick={() => sortToMin()}>От большего к меньшему</button>
+      {/* #############################################################
+      В случае, если потребуется сортировка, раскомментируйте данный код и удалите этот комментарий.
+      Подробнее в buble.js
+      #################################################################
+      <button onClick={() => sortToMin()}>От большего к меньшему</button>
       <button onClick={() => sortToMax()}>От меньшего к большему</button> */}
     </>
   );
