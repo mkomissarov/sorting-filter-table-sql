@@ -14,5 +14,7 @@ npm i
 npm start
 ```
 
+# Screenshots
 
+![Main page](http://i.yapx.ru/IAcDE.png "Main screen")
 
