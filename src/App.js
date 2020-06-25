@@ -153,6 +153,13 @@ function App() {
         }
     }
   }
+  function getDate(value) {
+    let date = new Date(+value);
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return day + '.' + month + '.' + year;
+  }
 
   return (
     <>
@@ -186,7 +193,7 @@ function App() {
             </tr>
             {cars.map((el) => (
               <tr>
-                <td>{el.date}</td>
+                <td>{getDate(el.date)}</td>
                 <td>{el.name}</td>
                 <td>{el.counter}</td>
                 <td>{el.track}</td>
